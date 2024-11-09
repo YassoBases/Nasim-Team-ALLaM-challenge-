@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Include any additional CSS files here -->
+    <style>
+        /* Page-Specific Styles */
+        body.light-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .settings-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .settings-header button,
+        .settings-header a {
+            margin-left: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .settings-header img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Theme Toggle Styles */
+        .theme-toggle-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .theme-toggle-label input {
+            display: none;
+        }
+
+        .theme-toggle-label .slider {
+            position: relative;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 34px;
+            margin-left: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .theme-toggle-label .slider::before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 1px;
+            bottom: 1px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+
+        .theme-toggle-label input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        .theme-toggle-label input:checked + .slider::before {
+            transform: translateX(20px);
+        }
+
+        /* Settings Links */
+        .settings {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .settings a,
+        .settings button {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            margin: 10px 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .settings a img,
+        .settings button img {
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Dark Mode Adjustments */
+        body.dark-mode .settings a,
+        body.dark-mode .settings button {
+            color: #ffffff;
+        }
+
+    </style>
+</head>
+<body class="light-mode"> <!-- Default to light mode -->
+    <div class="settings-container">
+        <div class="settings-header">
+            <h2>Settings</h2>
+            <!-- Optional Back Button -->
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='images/back-icon.png') }}" alt="Back">
+            </a>
+        </div>
+
+        <p>Toggle between Dark and Light Mode, manage chat history, and clear chats.</p>
+
+        <!-- Settings List -->
+        <div class="settings">
+            <!-- Theme Toggle -->
+            <div class="settings-item">
+                <label class="theme-toggle-label">
+                    <img id="mode-icon"
+                         src="{{ url_for('static', filename='images/turn off.png') }}"
+                         alt="Mode Toggle"
+                         data-light-icon="{{ url_for('static', filename='images/turn off.png') }}"
+                         data-dark-icon="{{ url_for('static', filename='images/turn on.png') }}">
+                    <span id="mode-text">Light Mode</span>
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Profile Link -->
+            <div class="settings-item">
+                <a href="{{ url_for('profile') }}">
+                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile">
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <!-- Symptom Tracker Link -->
+            <div class="settings-item">
+                <a href="{{ url_for('symptom_tracker') }}">
+                    <img src="{{ url_for('static', filename='images/symo.png') }}" alt="Symptom Tracker">
+                    <span>Symptom Tracker</span>
+                </a>
+            </div>
+
+            <!-- History Link -->
+            <div class="settings-item">
+                <a href="{{ url_for('history') }}">
+                    <img src="{{ url_for('static', filename='images/historyicon.png') }}" alt="History">
+                    <span>History</span>
+                </a>
+            </div>
+<!-- Vaccine Tracker Link -->
+<div class="settings-item">
+    <a href="{{ url_for('vaccine_tracker') }}">
+        <img src="{{ url_for('static', filename='images/vcc.png') }}" alt="Vaccine Tracker">
+        <span>Vaccine Tracker</span>
+    </a>
+</div>
+
+            <!-- Clear Chat Button -->
+            <div class="settings-item">
+                <button id="clear-chat-btn">
+                    <img src="{{ url_for('static', filename='images/trashno-removebg-preview.png') }}" alt="Clear Chat">
+                    <span>Clear Chat</span>
+                </button>
+            </div>
+
+            <!-- Logout Link -->
+            <div class="settings-item">
+                <a href="{{ url_for('logout') }}">
+                    <img src="{{ url_for('static', filename='images/logout.png') }}" alt="Logout">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include JavaScript at the end of the body -->
+    <script>
+        // Theme toggling functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const modeIcon = document.getElementById('mode-icon');
+            const modeText = document.getElementById('mode-text');
+
+            // Load and apply the saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+
+            function applyTheme(theme) {
+                const lightIcon = modeIcon.getAttribute('data-light-icon');
+                const darkIcon = modeIcon.getAttribute('data-dark-icon');
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    modeIcon.src = darkIcon;
+                    modeText.textContent = 'Dark Mode';
+                    themeToggle.checked = true;
+                } else {
+                    body.classList.remove('dark-mode');
+                    modeIcon.src = lightIcon;
+                    modeText.textContent = 'Light Mode';
+                    themeToggle.checked = false;
+                }
+            }
+
+            themeToggle.addEventListener('change', function() {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+themeToggle.addEventListener('change', function() {
+    const newTheme = themeToggle.checked ? 'dark' : 'light';
+    try {
+        localStorage.setItem('theme', newTheme);
+    } catch (error) {
+        console.error('Error saving theme to localStorage:', error);
+    }
+    applyTheme(newTheme);
+});
+
+            // Clear Chat functionality
+            const clearChatBtn = document.getElementById('clear-chat-btn');
+            clearChatBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear the chat?')) {
+                    fetch('/clear_chat', { method: 'POST' })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('Chat cleared successfully.');
+                                // Optionally, redirect or update the UI
+                            } else {
+                                alert('Failed to clear chat.');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Set background color */
+        body {
+            background-color: #888888FF;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Login container styling */
+        .login-container {
+            width: 40%; /* Matching register container width */
+            max-width: 600px;
+            padding: 40px;
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            text-align: center;
+            margin: 5% auto;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Input field styling */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #f8f8f8;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #7eb1af;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #63938f;
+        }
+
+        /* Flexbox for Remember Me alignment */
+        .remember-me {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Link styling */
+        a {
+            color: #6a0dad;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Error message styling */
+        .error {
+            color: red;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login to Your Account</h2>
+
+        <!-- Display error messages if login fails -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="error">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <!-- Remember me checkbox aligned with text -->
+            <div class="remember-me">
+                <input type="checkbox" id="remember_me" name="remember_me">
+                <label for="remember_me">Remember me</label>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- Link to registration page -->
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
+    </div>
+</body>
+</html>

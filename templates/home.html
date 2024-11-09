@@ -1,0 +1,436 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Slide-in animation for messages */
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Typing dots animation */
+        @keyframes typingDots {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+            100% { content: ''; }
+        }
+
+        /* Animations for the chat bubbles */
+        .message {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* User message bubble */
+        .message.user {
+            background-color: #e6f7ff; /* Light blue for user message */
+            align-self: flex-end;
+        }
+
+        /* Bot message bubble */
+        .message.bot {
+            background-color: #D6F0F5; /* Slightly different blue for bot message */
+            align-self: flex-start;
+        }
+
+        /* Typing indicator */
+        .typing-indicator .text::after {
+            content: "...";
+            display: inline-block;
+            animation: typingDots 1s steps(3, end) infinite;
+        }
+
+        /* Assistant character animations */
+        @keyframes flyIn {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes flyOut {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+        }
+
+        #assistant-character {
+            animation: flyIn 1s ease-out;
+        }
+
+        #assistant-character.fly-out {
+            animation: flyOut 1s ease-in;
+        }
+
+        /* Settings Menu Styles (from the second code) */
+        .settings-menu {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            z-index: 1000;
+            width: 200px;
+        }
+
+        .settings-menu.hidden {
+            display: none;
+        }
+
+        .settings-options {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Settings Item Styling */
+        .settings-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .settings-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-item img {
+            background-color: transparent !important;
+            width: 24px; /* Ensure all icons are consistently sized */
+            height: 24px;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+
+        .settings-item a,
+        .settings-item button {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        /* Theme Toggle Label */
+        .theme-toggle-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .theme-toggle-label input {
+            margin-left: auto;
+        }
+
+        .theme-toggle-label img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        /* Dark Mode Styling */
+
+        body.dark-mode .settings-item a,
+        body.dark-mode .settings-item button {
+            color: #ffffff;
+        }
+
+        /* Main Content Adjustments */
+        .main-content {
+            margin-top: 30px; /* Adjust spacing as needed */
+        }
+
+    </style>
+</head>
+<body class="light-mode">
+    <div class="chat-container">
+        <!-- Header section with icons aligned -->
+        <div class="header">
+            <div class="user-info">
+                {% if session['username'] %}
+                    <span>Welcome, {{ session['username'] }}!</span>
+                {% else %}
+                    <span>Welcome, Guest!</span>
+                {% endif %}
+            </div>
+
+            <!-- Settings Button -->
+            <button class="settings-btn" id="settings-btn">
+                <img src="{{ url_for('static', filename='images/settingsno-removebg-preview.png') }}" alt="Settings">
+            </button>
+        </div>
+
+        <!-- Settings Menu -->
+        <div id="settings-menu" class="settings-menu hidden">
+            <div class="settings-options">
+                <div class="settings-item">
+                    <label class="theme-toggle-label">
+                        <img id="mode-icon"
+                             src="{{ url_for('static', filename='images/turn off.png') }}"
+                             alt="Mode Toggle"
+                             data-light-icon="{{ url_for('static', filename='images/turn off.png') }}"
+                             data-dark-icon="{{ url_for('static', filename='images/turn on.png') }}">
+                        <span id="mode-text">Light Mode</span>
+                        <input type="checkbox" id="theme-toggle">
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <a href="{{ url_for('profile') }}">
+                        <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile">
+                        <span>Profile</span>
+                    </a>
+                </div>
+                <div class="settings-item">
+                    <a href="{{ url_for('symptom_tracker') }}">
+                        <img src="{{ url_for('static', filename='images/symo.png') }}" alt="Symptom Tracker">
+                        <span>Symptom Tracker</span>
+                    </a>
+                </div>
+                <div class="settings-item">
+                    <a href="{{ url_for('history') }}">
+                        <img src="{{ url_for('static', filename='images/historyicon.png') }}" alt="History">
+                        <span>History</span>
+                    </a>
+                </div>
+                <div class="settings-item">
+    <a href="{{ url_for('vaccine_tracker') }}">
+        <img src="{{ url_for('static', filename='images/vcc.png') }}" alt="Vaccine Tracker">
+        <span>Vaccine Tracker</span>
+    </a>
+</div>
+                <div class="settings-item">
+                    <button id="clear-chat-btn">
+                        <img src="{{ url_for('static', filename='images/trashno-removebg-preview.png') }}" alt="Clear Chat">
+                        <span>Clear Chat</span>
+                    </button>
+                </div>
+                <div class="settings-item">
+                    <a href="{{ url_for('logout') }}">
+                        <img src="{{ url_for('static', filename='images/logout.png') }}" alt="Logout">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div class="main-content">
+            <div class="center-image" id="logo-container">
+                <img src="{{ url_for('static', filename='images/logoscreen.png') }}" alt="Logo Screen" class="chat-logo">
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                {% for chat in chats %}
+                    <div class="message {{ 'user' if chat.sender == 'User' else 'bot' }}">
+                        <span class="timestamp">[{{ chat.timestamp }}]</span>
+                        <span class="sender">{{ chat.sender }}:</span>
+                        <div class="text">{{ chat.message | safe }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Chat Box -->
+        <div class="chat-box">
+            <textarea id="message-input" placeholder="Type your message here..."></textarea>
+            <button class="send-btn" id="send-btn">
+                <img src="{{ url_for('static', filename='images/sendno-removebg-preview.png') }}" alt="Send">
+            </button>
+        </div>
+
+        <!-- Assistant Character Image -->
+        <div id="assistant-character" style="position: fixed; bottom: 100px; right: 50px; width: 150px; height: 150px; display: none;">
+            <img src="{{ url_for('static', filename='images/naseemchr.png') }}" alt="Assistant Character" style="width: 100%; height: 100%;">
+        </div>
+    </div>
+
+
+    <!-- Script Section -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get necessary elements
+        const settingsBtn = document.getElementById('settings-btn');
+        const settingsMenu = document.getElementById('settings-menu');
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const modeIcon = document.getElementById('mode-icon');
+        const modeText = document.getElementById('mode-text');
+        const sendBtn = document.getElementById('send-btn');
+        const textarea = document.getElementById('message-input');
+        const chatMessages = document.getElementById('chat-messages');
+        const clearChatBtn = document.getElementById('clear-chat-btn');
+        const assistantCharacter = document.getElementById('assistant-character');
+
+        let typingTimer;
+        const typingTimeout = 60000; // 1-minute timeout
+
+        // Load and apply the saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        function applyTheme(theme) {
+            const lightIcon = modeIcon.getAttribute('data-light-icon');
+            const darkIcon = modeIcon.getAttribute('data-dark-icon');
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                modeIcon.src = darkIcon;
+                modeText.textContent = 'Dark Mode';
+                themeToggle.checked = true;
+            } else {
+                body.classList.remove('dark-mode');
+                modeIcon.src = lightIcon;
+                modeText.textContent = 'Light Mode';
+                themeToggle.checked = false;
+            }
+        }
+
+        // Toggle theme when the checkbox is changed
+        themeToggle.addEventListener('change', function () {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // Toggle the settings menu visibility
+        settingsBtn.addEventListener('click', () => {
+            settingsMenu.classList.toggle('hidden');
+        });
+
+        // Close settings menu when clicking outside
+        document.addEventListener('click', function (event) {
+            if (!settingsMenu.contains(event.target) && !settingsBtn.contains(event.target)) {
+                settingsMenu.classList.add('hidden');
+            }
+        });
+
+        // Send message when clicking the send button
+        sendBtn.addEventListener('click', function () {
+            sendMessage();
+        });
+
+        // Send message when pressing Enter (without Shift)
+        textarea.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+    const messageText = textarea.value.trim();
+    if (messageText !== '') {
+        // Create and display user message
+        const userMessageElem = document.createElement('div');
+        userMessageElem.classList.add('message', 'user');
+        userMessageElem.innerHTML = `
+            <span class="timestamp">[${new Date().toLocaleTimeString()}]</span>
+            <span class="sender">User:</span>
+            <div class="text">${messageText}</div>
+        `;
+        chatMessages.appendChild(userMessageElem);
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+
+        // Send message to the server
+        fetch('/send_message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: messageText }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                simulateTyping(data.reply);  // Pass only bot reply
+            } else {
+                alert('Failed to send message.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        // Clear the textarea
+        textarea.value = '';
+        textarea.focus();
+    }
+}
+
+function simulateTyping(botReply) {
+    // Create a bot message element
+    const botMessageElem = document.createElement('div');
+    botMessageElem.classList.add('message', 'bot');
+    
+    // Add timestamp and sender
+    botMessageElem.innerHTML = `
+        <span class="timestamp">[${new Date().toLocaleTimeString()}]</span>
+        <span class="sender">Bot:</span>
+        <div class="text"></div>
+    `;
+
+    // Find the text container and set its content using textContent to avoid HTML issues
+    botMessageElem.querySelector('.text').textContent = botReply;  // Use textContent instead of innerHTML
+
+    // Append bot message to chat container
+    chatMessages.appendChild(botMessageElem);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+}
+
+
+
+
+        // Clear chat functionality
+        clearChatBtn.addEventListener('click', function () {
+            if (confirm('Are you sure you want to clear the chat?')) {
+                fetch('/clear_chat', { method: 'POST' })
+                    .then(response => {
+                        if (response.ok) {
+                            chatMessages.innerHTML = ''; // Clear chat messages
+                            alert('Chat cleared successfully.');
+                        } else {
+                            alert('Failed to clear chat.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+
+        // Handle assistant character display
+        textarea.addEventListener('input', function () {
+            assistantCharacter.style.display = 'block';
+            assistantCharacter.classList.remove('fly-out');
+            clearTimeout(typingTimer);
+
+            typingTimer = setTimeout(function () {
+                assistantCharacter.classList.add('fly-out');
+                setTimeout(() => {
+                    assistantCharacter.style.display = 'none';
+                }, 1000); // Wait for animation to complete
+            }, typingTimeout);
+        });
+    });
+</script>
+
+</body>
+</html>

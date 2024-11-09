@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccine Tracker</title>
+    <style>
+        body {
+
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+.return-button {
+    position: fixed;
+    top: 10px;
+    left: 10px; /* Move to the left */
+    cursor: pointer;
+}
+
+
+.return-button img {
+    width: 30px; /* Adjust the size as needed */
+    height: 30px;
+}
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .vaccine-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .vaccine-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .vaccine-item label {
+            flex: 1;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .vaccine-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .note-area {
+            margin-top: 10px;
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #7eb1af;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #7eb1af;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vaccine Tracker</h1>
+
+    <div class="vaccine-container">
+        <form id="vaccine-form">
+            <!-- Childhood Vaccines -->
+            <h2>Childhood Vaccines</h2>
+            <div class="vaccine-item">
+                <input type="checkbox" id="chickenpox" name="vaccine" value="Chickenpox (Varicella)">
+                <label for="chickenpox">Chickenpox (Varicella)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+     <div class="return-button">
+    <img src="{{ url_for('static', filename='images/returnprofile.png') }}" alt="Return" onclick="goBack()" />
+</div>
+
+            <div class="vaccine-item">
+                <input type="checkbox" id="dtap" name="vaccine" value="Diphtheria, Tetanus, Pertussis (DTaP)">
+                <label for="dtap">Diphtheria, Tetanus, Pertussis (DTaP)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="mmr" name="vaccine" value="Measles, Mumps, Rubella (MMR)">
+                <label for="mmr">Measles, Mumps, Rubella (MMR)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="polio" name="vaccine" value="Polio (IPV)">
+                <label for="polio">Polio (IPV)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="hepatitis_a" name="vaccine" value="Hepatitis A">
+                <label for="hepatitis_a">Hepatitis A</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="hepatitis_b" name="vaccine" value="Hepatitis B">
+                <label for="hepatitis_b">Hepatitis B</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="pcv13" name="vaccine" value="Pneumococcal (PCV13)">
+                <label for="pcv13">Pneumococcal (PCV13)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="rotavirus" name="vaccine" value="Rotavirus">
+                <label for="rotavirus">Rotavirus</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="hib" name="vaccine" value="Haemophilus influenzae type b (Hib)">
+                <label for="hib">Haemophilus influenzae type b (Hib)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+
+            <!-- Teen and Adult Vaccines -->
+            <h2>Teen and Adult Vaccines</h2>
+            <div class="vaccine-item">
+                <input type="checkbox" id="tdap" name="vaccine" value="Tetanus, Diphtheria, Pertussis (Tdap)">
+                <label for="tdap">Tetanus, Diphtheria, Pertussis (Tdap)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="hpv" name="vaccine" value="Human Papillomavirus (HPV)">
+                <label for="hpv">Human Papillomavirus (HPV)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="meningococcal" name="vaccine" value="Meningococcal">
+                <label for="meningococcal">Meningococcal</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="flu" name="vaccine" value="Influenza (Flu)">
+                <label for="flu">Influenza (Flu)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="covid" name="vaccine" value="COVID-19">
+                <label for="covid">COVID-19</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="shingles" name="vaccine" value="Shingles">
+                <label for="shingles">Shingles (for adults 50+)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+            <div class="vaccine-item">
+                <input type="checkbox" id="ppsv23" name="vaccine" value="Pneumococcal (PPSV23)">
+                <label for="ppsv23">Pneumococcal (PPSV23 for adults 65+)</label>
+                <textarea class="note-area" placeholder="Add a note..."></textarea>
+            </div>
+
+            <button type="button" class="submit-btn" onclick="saveVaccineData()">Save</button>
+        </form>
+    </div>
+
+    <script>
+        // Placeholder function to simulate saving data
+        function saveVaccineData() {
+            const checkboxes = document.querySelectorAll('input[name="vaccine"]:checked');
+            const notes = document.querySelectorAll('.note-area');
+            const selectedVaccines = Array.from(checkboxes).map(cb => cb.value);
+            const notesData = Array.from(notes).map(note => note.value);
+
+            console.log("Selected Vaccines:", selectedVaccines);
+            console.log("Notes:", notesData);
+
+            alert("Your vaccine data has been saved (simulated).");
+        }
+        function goBack() {
+    window.history.back();
+}
+document.addEventListener('DOMContentLoaded', function () {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    });
+    </script>
+</body>
+</html>

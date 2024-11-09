@@ -1,0 +1,58 @@
+2024-10-01 18:16:40,802 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-10-01 18:16:40,803 INFO [33mPress CTRL+C to quit[0m
+2024-10-01 18:16:40,805 INFO  * Restarting with stat
+2024-10-01 18:16:42,164 WARNING  * Debugger is active!
+2024-10-01 18:16:42,170 INFO  * Debugger PIN: 538-398-737
+2024-10-01 18:17:06,058 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-10-01 18:17:06,059 INFO [33mPress CTRL+C to quit[0m
+2024-10-01 18:17:06,062 INFO  * Restarting with stat
+2024-10-01 18:17:07,397 WARNING  * Debugger is active!
+2024-10-01 18:17:07,403 INFO  * Debugger PIN: 538-398-737
+2024-10-01 18:17:17,077 INFO 127.0.0.1 - - [01/Oct/2024 18:17:17] "GET / HTTP/1.1" 200 -
+2024-10-01 18:17:17,455 INFO 127.0.0.1 - - [01/Oct/2024 18:17:17] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-10-01 18:17:17,464 INFO 127.0.0.1 - - [01/Oct/2024 18:17:17] "[36mGET /static/images/sendno-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-10-01 18:17:17,468 INFO 127.0.0.1 - - [01/Oct/2024 18:17:17] "[36mGET /static/images/settingsno-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-10-01 18:17:17,478 INFO 127.0.0.1 - - [01/Oct/2024 18:17:17] "[36mGET /static/images/historyno-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-10-01 18:17:17,478 INFO 127.0.0.1 - - [01/Oct/2024 18:17:17] "[36mGET /static/images/trashno-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-10-01 18:17:17,486 INFO 127.0.0.1 - - [01/Oct/2024 18:17:17] "[36mGET /static/images/logoscreen.png HTTP/1.1[0m" 304 -
+2024-10-01 18:17:17,486 INFO 127.0.0.1 - - [01/Oct/2024 18:17:17] "[36mGET /static/images/logout.png HTTP/1.1[0m" 304 -
+2024-10-01 18:17:21,007 DEBUG Sending request to Watsonx API: https://eu-de.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
+2024-10-01 18:17:21,007 DEBUG Starting new HTTPS connection (1): eu-de.ml.cloud.ibm.com:443
+2024-10-01 18:17:21,235 DEBUG https://eu-de.ml.cloud.ibm.com:443 "POST /ml/v1/text/generation?version=2023-05-29 HTTP/11" 401 272
+2024-10-01 18:17:21,241 ERROR Watsonx API returned an error: 401, {"errors":[{"code":"authentication_token_not_valid","message":"Failed to authenticate the request due to invalid token: Failed to parse and verify token","more_info":"https://cloud.ibm.com/apidocs/watsonx-ai"}],"trace":"fc3bbda1362b51427598489ca5c1c1ba","status_code":401}
+2024-10-01 18:17:21,241 ERROR 'generated_text' not found in Watsonx API response: Error: 401, {"errors":[{"code":"authentication_token_not_valid","message":"Failed to authenticate the request due to invalid token: Failed to parse and verify token","more_info":"https://cloud.ibm.com/apidocs/watsonx-ai"}],"trace":"fc3bbda1362b51427598489ca5c1c1ba","status_code":401}
+2024-10-01 18:17:21,244 INFO Chat history saved successfully
+2024-10-01 18:17:21,244 INFO User message processed: hi
+2024-10-01 18:17:21,244 INFO Bot reply sent: Bot: Error: 'generated_text' not found in the response.
+2024-10-01 18:17:21,246 INFO 127.0.0.1 - - [01/Oct/2024 18:17:21] "POST /send_message HTTP/1.1" 200 -
+2024-10-01 18:22:58,709 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-10-01 18:22:58,709 INFO [33mPress CTRL+C to quit[0m
+2024-10-01 18:22:58,712 INFO  * Restarting with stat
+2024-10-01 18:23:00,034 WARNING  * Debugger is active!
+2024-10-01 18:23:00,040 INFO  * Debugger PIN: 538-398-737
+2024-10-01 18:23:14,366 INFO 127.0.0.1 - - [01/Oct/2024 18:23:14] "GET / HTTP/1.1" 200 -
+2024-10-01 18:23:14,706 INFO 127.0.0.1 - - [01/Oct/2024 18:23:14] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-10-01 18:23:14,718 INFO 127.0.0.1 - - [01/Oct/2024 18:23:14] "[36mGET /static/images/sendno-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-10-01 18:23:14,741 INFO 127.0.0.1 - - [01/Oct/2024 18:23:14] "[36mGET /static/images/historyno-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-10-01 18:23:14,754 INFO 127.0.0.1 - - [01/Oct/2024 18:23:14] "[36mGET /static/images/logout.png HTTP/1.1[0m" 304 -
+2024-10-01 18:23:14,757 INFO 127.0.0.1 - - [01/Oct/2024 18:23:14] "[36mGET /static/images/logoscreen.png HTTP/1.1[0m" 304 -
+2024-10-01 18:23:14,763 INFO 127.0.0.1 - - [01/Oct/2024 18:23:14] "[36mGET /static/images/settingsno-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-10-01 18:23:14,765 INFO 127.0.0.1 - - [01/Oct/2024 18:23:14] "[36mGET /static/images/trashno-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-10-01 18:23:18,535 DEBUG Sending request to Watsonx API: https://eu-de.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
+2024-10-01 18:23:18,542 DEBUG Starting new HTTPS connection (1): eu-de.ml.cloud.ibm.com:443
+2024-10-01 18:23:18,873 DEBUG https://eu-de.ml.cloud.ibm.com:443 "POST /ml/v1/text/generation?version=2023-05-29 HTTP/11" 401 272
+2024-10-01 18:23:18,873 ERROR Watsonx API returned an error: 401, {"errors":[{"code":"authentication_token_not_valid","message":"Failed to authenticate the request due to invalid token: Failed to parse and verify token","more_info":"https://cloud.ibm.com/apidocs/watsonx-ai"}],"trace":"bcb7031b581f5cd9a995d5884314efba","status_code":401}
+2024-10-01 18:23:18,874 ERROR 'generated_text' not found in Watsonx API response: Error: 401, {"errors":[{"code":"authentication_token_not_valid","message":"Failed to authenticate the request due to invalid token: Failed to parse and verify token","more_info":"https://cloud.ibm.com/apidocs/watsonx-ai"}],"trace":"bcb7031b581f5cd9a995d5884314efba","status_code":401}
+2024-10-01 18:23:18,876 INFO Chat history saved successfully
+2024-10-01 18:23:18,876 INFO User message processed: hi
+2024-10-01 18:23:18,876 INFO Bot reply sent: Bot: Error: 'generated_text' not found in the response. Response: Error: 401, {"errors":[{"code":"authentication_token_not_valid","message":"Failed to authenticate the request due to invalid token: Failed to parse and verify token","more_info":"https://cloud.ibm.com/apidocs/watsonx-ai"}],"trace":"bcb7031b581f5cd9a995d5884314efba","status_code":401}
+2024-10-01 18:23:18,879 INFO 127.0.0.1 - - [01/Oct/2024 18:23:18] "POST /send_message HTTP/1.1" 200 -
+2024-10-02 19:49:13,702 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-10-02 19:49:13,702 INFO [33mPress CTRL+C to quit[0m
+2024-10-02 19:49:13,705 INFO  * Restarting with stat
+2024-10-02 19:49:14,465 WARNING  * Debugger is active!
+2024-10-02 19:49:14,467 INFO  * Debugger PIN: 538-398-737

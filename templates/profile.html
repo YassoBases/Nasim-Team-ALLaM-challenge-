@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile - Medical Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Theme Styles */
+        body.light-mode {
+            background-color: #b3b5b5;
+            color: #333333; /* Changed to a darker color for better readability */
+        }
+
+        body.dark-mode {
+            background-color: rgb(99, 147, 143);
+            color: #ffffff;
+        }
+
+        /* Additional styles for the return icon */
+        .return-icon {
+            width: 40px;    /* Adjust icon size */
+            height: 40px;
+            margin-right: 10px; /* Space between icon and heading */
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #FFFFFF; /* White container */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Ensure container stays white in both light and dark modes */
+        body.dark-mode .container {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Header styles */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Space between elements */
+        }
+        .profile-title {
+            display: flex;
+            align-items: center;
+        }
+        .profile-title h1 {
+            margin: 0;
+        }
+
+        /* Theme Toggle Switch */
+        .theme-toggle-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .theme-toggle-label input {
+            display: none;
+        }
+
+        .theme-toggle-label .slider {
+            position: relative;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 34px;
+            margin-left: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .theme-toggle-label .slider::before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 1px;
+            bottom: 1px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+
+        .theme-toggle-label input:checked + .slider {
+            background-color: #8cc3bc;
+        }
+
+        .theme-toggle-label input:checked + .slider::before {
+            transform: translateX(20px);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        /* Label Styles in Light Mode */
+        body.light-mode label {
+            color: #555555; /* Darker gray for labels in light mode */
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 10px 20px;
+            background-color: #8ac1ba;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #8ac1ba;
+        }
+
+        /* Dark Mode Adjustments */
+        body.dark-mode .btn {
+            background-color: #429a8e;
+        }
+        body.dark-mode .btn:hover {
+            background-color: #429a8e;
+        }
+        body.dark-mode .form-control {
+            background-color: #6e6e6e; /* Changed to gray */
+            color: #ffffff;
+            border: 1px solid #f3ebeb;
+        }
+
+    </style>
+</head>
+<body class="light-mode">
+    <div class="container">
+        <!-- Header with Return Icon, Heading, and Theme Toggle -->
+        <div class="profile-header">
+            <div class="profile-title">
+                <a href="{{ url_for('home') }}">
+                    <img src="{{ url_for('static', filename='images/returnprofile.png') }}" alt="Return to Home" class="return-icon">
+                </a>
+                <h1>User Profile</h1>
+            </div>
+            <!-- Theme Toggle Switch -->
+            <label class="theme-toggle-label">
+                <span id="mode-text">Light Mode</span>
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <form method="POST" action="{{ url_for('profile') }}">
+            {{ form.hidden_tag() }}  <!-- CSRF token -->
+            <div class="form-group">
+                <label for="{{ form.name.id }}">Name:</label>
+                {{ form.name(class_="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.age.id }}">Age:</label>
+                {{ form.age(class_="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.gender.id }}">Gender:</label>
+                {{ form.gender(class_="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.blood_type.id }}">Blood Type:</label>
+                {{ form.blood_type(class_="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.medical_history.id }}">Medical History:</label>
+                {{ form.medical_history(class_="form-control", rows=4) }}
+            </div>
+            <button type="submit" class="btn">Update Profile</button>
+        </form>
+    </div>
+
+    <!-- JavaScript for Theme Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const modeText = document.getElementById('mode-text');
+
+            // Load and apply the saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    body.classList.remove('light-mode');
+                    modeText.textContent = 'Dark Mode';
+                    themeToggle.checked = true;
+                } else {
+                    body.classList.add('light-mode');
+                    body.classList.remove('dark-mode');
+                    modeText.textContent = 'Light Mode';
+                    themeToggle.checked = false;
+                }
+            }
+
+            // Toggle theme when the checkbox is changed
+            themeToggle.addEventListener('change', function() {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+        });
+    </script>
+</body>
+</html>

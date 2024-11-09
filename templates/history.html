@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* PDF Icon styles */
+        .pdf-icon {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .pdf-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Dark mode chat container style */
+        .dark-chat {
+            background-color: #63938f;
+            color: #777777;
+        }
+
+        /* Updated chat-container styles for full width */
+        .chat-container {
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .icon-group.hidden {
+            display: none;
+        }
+
+        .icon-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Return Button Styling */
+        .return-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .return-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Settings Menu Styles */
+        .settings-menu {
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            z-index: 1000;
+        }
+
+        .settings-menu.hidden {
+            display: none;
+        }
+
+        .settings-options {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .settings-item {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .settings-item img {
+            margin-right: 10px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        #theme-toggle {
+            margin-left: 10px;
+        }
+        /* Chat Message Container Styles */
+.chat-container {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Individual Chat Messages */
+.chat-messages .message {
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+/* Light Mode Styling */
+body.light-mode .chat-container {
+    background-color: #b3b5b5;
+}
+
+body.light-mode .chat-messages .message {
+    background-color: #ffffff;
+    color: #333;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Styling */
+body.dark-mode .chat-container {
+    background-color: #45716e;
+}
+
+body.dark-mode .chat-messages .message {
+    background-color: #63938f;
+    color: #e0e0e0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Timestamp and Sender Text */
+.chat-messages .timestamp {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.chat-messages .sender {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+    </style>
+</head>
+<body class="light-mode">
+    <!-- Return Button -->
+    <a href="{{ url_for('home') }}" class="return-btn">
+        <img src="{{ url_for('static', filename='images/returnprofile.png') }}" alt="Return">
+    </a>
+
+    <div class="chat-container dark-chat">
+        <!-- Header section with icons aligned -->
+        <div class="header">
+            <div class="user-info">
+                {% if session['username'] %}
+                    <span>Welcome, {{ session['username'] }}!</span>
+                {% else %}
+                    <span>Welcome, Guest!</span>
+                {% endif %}
+            </div>
+
+            <!-- Settings Button -->
+            <button class="settings-btn" id="settings-btn">
+                <img src="{{ url_for('static', filename='images/settingsno-removebg-preview.png') }}" alt="Settings">
+            </button>
+<a href="{{ url_for('download_history_pdf') }}" class="pdf-icon" aria-label="Download PDF">
+    <img src="{{ url_for('static', filename='images/pdf.png') }}" alt="Download PDF">
+</a>
+
+            <!-- Settings Menu -->
+            <div id="settings-menu" class="settings-menu hidden">
+                <div class="settings-options">
+                    <div class="settings-item">
+                        <label class="theme-toggle-label">
+                            <img id="mode-icon"
+                                 src="{{ url_for('static', filename='images/turn off.png') }}"
+                                 alt="Mode Toggle"
+                                 data-light-icon="{{ url_for('static', filename='images/turn off.png') }}"
+                                 data-dark-icon="{{ url_for('static', filename='images/turn on.png') }}">
+                            <span id="mode-text">Light Mode</span>
+                            <input type="checkbox" id="theme-toggle">
+                        </label>
+                    </div>
+
+                    <div class="settings-item">
+                        <a href="{{ url_for('profile') }}">
+                            <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile">
+                            <span>Profile</span>
+                        </a>
+                    </div>
+
+                    <div class="settings-item">
+                        <button id="clear-history-btn">
+                            <img src="{{ url_for('static', filename='images/trashno-removebg-preview.png') }}" alt="Clear History">
+                            <span>Clear History</span>
+                        </button>
+                    </div>
+
+                    <div class="settings-item">
+                        <a href="{{ url_for('logout') }}">
+                            <img src="{{ url_for('static', filename='images/logout.png') }}" alt="Logout">
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Section -->
+        <div class="main-content">
+            <h2>Chat History</h2>
+            <div class="chat-messages" id="chat-messages">
+                {% for chat in chats %}
+                    <div class="message {{ chat.sender }} chat-box">
+                        <span class="timestamp">[{{ chat.timestamp }}]</span>
+                        <span class="sender">{{ chat.sender.capitalize() }}:</span>
+                        <span class="text">{{ chat.message|safe }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- PDF Download Icon -->
+        <a href="{{ url_for('download_history_pdf') }}" class="pdf-icon">
+            <img src="{{ url_for('static', filename='images/pdf.png') }}" alt="Download PDF">
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const settingsBtn = document.getElementById('settings-btn');
+            const settingsMenu = document.getElementById('settings-menu');
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const modeIcon = document.getElementById('mode-icon');
+            const modeText = document.getElementById('mode-text');
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
+            const chatMessages = document.getElementById('chat-messages');
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+
+            function applyTheme(theme) {
+                const lightIcon = modeIcon.getAttribute('data-light-icon');
+                const darkIcon = modeIcon.getAttribute('data-dark-icon');
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    modeIcon.src = darkIcon;
+                    modeText.textContent = 'Dark Mode';
+                    themeToggle.checked = true;
+                } else {
+                    body.classList.remove('dark-mode');
+                    modeIcon.src = lightIcon;
+                    modeText.textContent = 'Light Mode';
+                    themeToggle.checked = false;
+                }
+            }
+
+            themeToggle.addEventListener('change', function () {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            settingsBtn.addEventListener('click', () => {
+                settingsMenu.classList.toggle('hidden');
+            });
+
+            clearHistoryBtn.addEventListener('click', function () {
+                if (confirm('Are you sure you want to clear the history?')) {
+                    fetch('{{ url_for("clear_history") }}', {
+                        method: 'POST'
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                chatMessages.innerHTML = '';
+                                alert('History cleared successfully.');
+                            } else {
+                                alert('Failed to clear history.');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+
+                }
+            });
+
+            window.addEventListener('pageshow', () => {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                applyTheme(savedTheme);
+            });
+        });
+    </script>
+</body>
+</html>

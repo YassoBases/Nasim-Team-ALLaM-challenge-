@@ -1,0 +1,983 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Light and Dark Mode Styling */
+body.light-mode {
+    background-color: #63938f; /* Vista Blue for light mode */
+    color: #000000; /* Black text color for contrast */
+}
+
+body.dark-mode {
+    background-color: #000000; /* Space Cadet for dark mode */
+    color: #FFFFFF; /* White text color for readability */
+}
+
+/* Chat container styling */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+    overflow: hidden; /* Prevent overflow issues */
+    z-index: 1;
+}
+
+/* Light and Dark Mode for Chat Container */
+body.light-mode .chat-container {
+    background-color: #b3b5b5; /* Silver for light mode */
+}
+
+body.dark-mode .chat-container {
+    background-color: #63938f; /* Dark green for dark mode */
+}
+
+/* Header styling */
+.header {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    position: relative;
+    margin: 0;
+    z-index: 5;
+}
+
+/* Settings area styling inside the header */
+.settings-area {
+    display: flex;
+    align-items: center;
+}
+
+.settings-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.settings-btn img {
+    width: 40px;
+    height: 40px;
+}
+
+.icon-group.hidden {
+    display: none;
+}
+
+.icon-group a,
+.icon-group button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.icon-group a img,
+.icon-group button img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Theme Toggle Button styling */
+.theme-toggle-label {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    margin-left: 10px;
+    z-index: 10;
+}
+
+.theme-toggle-label input {
+    display: none;
+}
+
+.theme-toggle-label .slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #7eb1af; /* Lighter Vista Blue */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: .4s;
+    border-radius: 25px;
+}
+
+.theme-toggle-label .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #FFFFFF;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+
+.theme-toggle-label input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Main Content Section styling */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;
+    z-index: 1;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    white-space: normal; /* Allow scrolling if messages exceed container height */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+     z-index: 2;
+}
+/* Message styling */
+.message {
+    max-width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+
+
+.message.user {
+    background-color: #FFFFFF; /* White background for user message */
+    align-self: flex-end;
+    color: #000000;
+    font-size: 22px;
+}
+
+.message.bot {
+    background-color: #D6F0F5; /* Very light Vista Blue for bot message */
+    align-self: flex-start;
+    color: #000000;
+    font-size: 22px;
+}
+
+/* Adjust for dark mode */
+body.dark-mode .message.user {
+    background-color: #63938f; /* Slightly lighter Space Cadet */
+    color: #FFFFFF;
+    font-size: 22px;
+}
+
+body.dark-mode .message.bot {
+    background-color: #63938f; /* Even lighter Space Cadet */
+    color: #FFFFFF;
+    font-size: 22px;
+}
+
+/* Chat box styling */
+.chat-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 1px solid #555;
+    align-items: center;
+    /* Match chat container background */
+    background-color: inherit; /* Use 'inherit' to match parent background */
+    z-index: 2;
+}
+
+/* Ensure the chat box background matches the overall background */
+body.light-mode .chat-box {
+    background-color: #dcdcdc; /* Lighter shade of Silver for chat box in light mode */
+}
+
+body.dark-mode .chat-box {
+    background-color: #63938f; /* Match chat container in dark mode */
+}
+
+/* Chat input area styling */
+.chat-box textarea {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    resize: none;
+    background-color: #FFFFFF; /* White background for textarea */
+    color: #000000;
+}
+
+.chat-box textarea::placeholder {
+    color: #888888;
+}
+
+/* Ensure textarea remains white in dark mode */
+body.dark-mode .chat-box textarea {
+    background-color: #FFFFFF; /* Keep textarea white in dark mode */
+    color: #000000;
+}
+
+/* Chat send button */
+.chat-box button {
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.chat-box button img {
+    width:40px;
+    height:40px;
+}
+
+/* Hidden class to toggle visibility */
+.hidden {
+    display: none;
+}
+
+/* Center the image in the chat screen */
+.center-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+/* Ensure chat logo is centered and adjusts for screen */
+.chat-logo {
+    width: 150px;
+    height: auto;
+    opacity: 0.8;
+}
+
+/* Hide logo container when chat messages appear */
+.hidden-logo {
+    display: none;
+}
+
+/* Login container styling */
+.login-container {
+    width: 40%;
+    max-width: 600px;
+    padding: 40px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    text-align: center;
+    margin: 5% auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+
+.icon-small {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.profile-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+}
+
+/* Profile Page Styling */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+body.dark-mode .profile-container {
+    background-color: #183a37; /* Space Cadet */
+    color: #FFFFFF;
+}
+
+.profile-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.return-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.return-btn img {
+    width: 30px;
+    height: 30px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    color: #181C39;
+}
+
+body.dark-mode h2 {
+    color: #FFFFFF;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode form {
+    background-color: #183a37;
+}
+
+label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #183a37;
+}
+
+body.dark-mode label {
+    color: #FFFFFF;
+}
+
+input, select, textarea {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 350px;
+    font-size: 14px;
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: #183a37;
+    color: #FFFFFF;
+    border: 1px solid #777;
+}
+
+textarea {
+    height: 70px;
+    resize: none;
+}
+
+/* Save button styling */
+button {
+    padding: 10px 20px;
+    background-color: #63938f;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+body.dark-mode button {
+    background-color: #517f78;
+}
+
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #3e857e;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    background-color: #e9ecef;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+/* Symptom Tracker Styling */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Light and Dark Mode Styling */
+body.light-mode {
+    background-color: #b1aeae; /* Updated light mode background color */
+    color: #000000; /* Black text color for contrast */
+}
+
+body.dark-mode {
+    background-color: #517f73; /* Updated dark mode background color */
+    color: #FFFFFF; /* White text color for readability */
+}
+
+/* Container styling for Symptom Tracker */
+.container {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto; /* Centers the container */
+    padding: 20px;
+    background-color: #FFFFFF; /* Light background for container */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex; /* Added for vertical centering */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Ensures it takes up most of the viewport */
+}
+
+/* Dark Mode container */
+body.dark-mode .container {
+    background-color: #858484; /* Darker background for dark mode container */
+    color: #FFFFFF; /* White text in dark mode */
+}
+
+/* Button styling */
+button {
+    background-color: #7caca8; /* Same as chat's buttons */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+/* Input styling for logging symptoms */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #9f9d9d;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+body.dark-mode input[type="text"] {
+    background-color: #858484;
+    color: #ffffff;
+    border: 1px solid #777777;
+}
+
+/* Logged symptoms list styling */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+body.dark-mode li {
+    background-color: #858484;
+    color: #ffffff;
+}
+
+/* Symptom tracker title */
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #181C39;
+    text-align: center;
+}
+
+body.dark-mode h2 {
+    color: #FFFFFF; /* White text in dark mode */
+}
+
+/* Sub-heading for logged symptoms */
+h3 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #858484;
+    text-align: center;
+}
+
+body.dark-mode h3 {
+    color: #FFFFFF;
+}
+/* 1. Fix the username container to match the password container */
+input[type="text"], input[type="password"] {
+  width: 100%; /* Ensure both have full width */
+  padding: 12px; /* Make sure padding is consistent */
+  margin: 8px 0; /* Same margin for both */
+  box-sizing: border-box;
+  border: 1px solid #ccc; /* Border color consistency */
+  border-radius: 4px; /* Rounded corners */
+  background-color: #f8f8f8; /* Light background */
+
+
+
+
+/* 4. Fix name container to match others */
+#profile-form input[type="text"], #profile-form input[type="number"], #profile-form select {
+  width: 100%; /* Full width */
+  padding: 12px; /* Same padding for consistency */
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8; /* Light gray for all */
+}
+
+#profile-form input[type="text"]:focus,
+#profile-form input[type="number"]:focus,
+#profile-form select:focus {
+  background-color: #f0f0f0; /* Gray highlight on focus */
+  outline: none; /* Remove outline */
+}
+
+/* 5. Remove highlight on settings and trash */
+#settings-icon, #clear-icon {
+  background-color: transparent; /* No background */
+  outline: none; /* No outline */
+}
+/* Darker chat box background */
+.chat-box {
+  background-color: #d3d3d3; /* Darker background for better contrast */
+  padding: 10px; /* Space around chat text */
+  border-radius: 8px; /* Rounded corners for smoother look */
+  margin-bottom: 10px; /* Space between chats */
+  color: black; /* Ensure text is readable */
+}
+/* Back button styles */
+.back-button {
+    position: absolute;
+    top: 20px; /* Adjust the position as needed */
+    left: 20px; /* Adjust the position as needed */
+    display: block;
+}
+
+.back-button img {
+    width: 40px; /* Adjust the size */
+    height: auto;
+    cursor: pointer;
+}
+/* Back button styles */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: block;
+}
+
+.back-button img {
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+}
+
+/* Trash button styles */
+.trash-button {
+    position: absolute;
+    bottom: 20px; /* Adjust the position as needed */
+    right: 20px;  /* Adjust the position as needed */
+    display: block;
+}
+
+.trash-button img {
+    width: 40px;  /* Adjust the size of the trash icon */
+    height: auto;
+    cursor: pointer;
+}
+
+/* Container for symptom tracker */
+.container {
+    margin-top: 60px; /* To ensure it's not hidden behind the back button */
+}
+
+/* Form and input styles */
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+button[type="submit"] {
+    background-color: #285a48;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Common styles for icons/buttons */
+.icon-button {
+    background: transparent; /* Make sure the background is transparent */
+    border: none; /* Remove any border */
+    cursor: pointer;
+    padding: 0;
+}
+
+.icon-button img {
+    width: 30px; /* Adjust icon size if necessary */
+    height: 30px;
+    filter: invert(0); /* Default for light mode */
+}
+
+/* Remove highlighted box effect for dark mode */
+body.dark-mode .icon-button {
+    background: transparent; /* Ensure background remains transparent */
+    box-shadow: none; /* Remove box shadow */
+}
+
+/* Example styles for individual icons */
+#settings-icon, #trash-icon, #send-icon {
+    display: inline-block;
+    margin: 5px; /* Adjust spacing as needed */
+}}
+/* Style for smaller icons */
+/* styles.css */
+
+/* Settings Button */
+
+
+.settings-btn img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Settings Menu */
+.settings-menu {
+    position: absolute;
+    top: 50px; /* Adjust based on your header height */
+    right: 10px;
+    background-color: #555555FF; /* New background color */
+    border: 1px solid #333; /* Slight border for contrast */
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for contrast */
+    z-index: 1000;
+    width: 200px;
+}
+/* Dark Mode Styles for Settings Menu */
+body.dark-mode .settings-menu {
+    background-color: #555555FF; /* Same background for dark mode */
+    border-color: #444;
+}
+.settings-menu.hidden {
+    display: none;
+}
+
+.settings-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.settings-item:last-child {
+    margin-bottom: 0;
+}
+
+.settings-item img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.settings-item a, .settings-item button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 16px;
+}
+
+
+
+.theme-toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.theme-toggle-label input {
+    margin-left: auto;
+}
+
+body.dark-mode .settings-item a,
+body.dark-mode .settings-item button,
+body.dark-mode .settings-item span {
+    color: #ffffff;
+}
+.settings-item img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    object-fit: contain;
+}
+.settings-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;  /* Space between each settings item */
+    padding: 0;
+    margin: 0;
+}
+.settings-menu {
+    padding: 10px;  /* Adjust padding inside the menu */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  /* Subtle shadow for contrast */
+}
+
+.settings-item {
+    align-items: center;
+    gap: 8px;  /* Space between icon and text */
+}
+.centered-logo img {
+    width: 150px;
+    height: 150px;
+     object-fit: contain;
+}
+.centered-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px; /* Adjust as needed */
+}
+/* Nasim Character Styling */
+.nasim-character {
+    position: absolute;
+    bottom: 20px; /* Position near the bottom */
+    right: -100px; /* Initially off-screen to the right */
+    width: 100px; /* Small size for Nasim */
+    height: auto;
+    transition: right 0.8s ease-in-out; /* Smooth transition effect */
+}
+
+/* On hover or when active, Nasim moves into view */
+.nasim-character:hover {
+    right: 20px; /* Moves Nasim into view from the right */
+}
+
+.nasim-character img {
+    width: 20%; /* Ensure the image fits inside the container */
+    height: auto;
+    object-fit: contain; /* Maintain aspect ratio */
+    cursor: pointer; /* Make the character interactive */
+}
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Light and Dark Mode Styling */
+body.light-mode {
+    background-color: #f0f0f0; /* Light background for light mode */
+    color: #000000; /* Black text color */
+}
+
+body.dark-mode {
+    background-color: #1a1a1a; /* Dark background for dark mode */
+    color: #FFFFFF; /* White text color */
+}
+
+/* Container styling */
+.container {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff; /* Light background for container */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .container {
+    background-color: #6e6b6b; /* Darker background for dark mode container */
+}
+/* Button styling */
+button {
+    background-color: #3e857e;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+body.dark-mode button {
+    background-color: #1a5f5a;
+}
+
+/* Input styling */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+body.dark-mode input[type="text"] {
+    background-color: #6e6b6b;
+    color: #ffffff;
+    border: 1px solid #777777;
+}
+
+/* Logged symptoms list */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+body.dark-mode li {
+    background-color: #6e6b6b;
+    color: #ffffff;
+}
+/* Default styling for icons */
+.settings-item img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    transition: filter 0.3s ease; /* Smooth transition effect */
+}
+
+/* Ensure the main-content area handles child elements properly */
+.main-content {
+    position: relative;
+    flex: 1;
+    overflow: hidden; /* Ensure no overflow */
+    padding: 10px;
+    z-index: 1; /* Keep it above the heart watermark */
+}
+/* Make the settings button background transparent */
+.settings-btn {
+    background-color: transparent !important; /* Ensure no background */
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+}
+
+/* Make the send button background transparent */
+.chat-box button {
+    background-color: transparent !important; /* Ensure no background */
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+}
+
+/* Remove background from Clear Chat button in the settings menu */
+.settings-item button {
+    background-color: transparent !important; /* Ensure no background */
+    border: none; /* Remove border */
+    outline: none; /* Remove outline */
+}
+/* Ensure all icons inside buttons are transparent */
+.settings-btn img,
+.chat-box button img,
+#settings-icon img,
+#clear-icon img {
+    background-color: transparent; /* No background on icons */
+    border: none; /* Remove any default border */
+    padding: 0; /* Remove any padding */
+    margin: 0; /* Remove any margin */
+    outline: none; /* Remove any outline */
+}
+/* Dark mode adjustments to keep buttons and icons transparent */
+body.dark-mode .settings-btn,
+body.dark-mode .chat-box button,
+body.dark-mode .settings-item button {
+    background-color: transparent !important;
+    border: none;
+    outline: none;
+}
+img[src*="vcc.png"] {
+    display: inline !important;
+    opacity: 1 !important;
+}

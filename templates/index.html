@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccine Tracker</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
+    <script>
+        async function checkVaccines() {
+            try {
+                const checkboxes = document.querySelectorAll('input[name="vaccine"]:checked');
+                const takenVaccines = Array.from(checkboxes).map(cb => cb.value);
+
+                const response = await fetch('/check_vaccines', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ taken_vaccines: takenVaccines })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+
+                const resultDiv = document.getElementById('result');
+
+                if (data.missing_vaccines.length > 0) {
+                    resultDiv.innerHTML = `
+                        <h3>Vaccines you still need:</h3>
+                        <ul>
+                            ${data.missing_vaccines.map(vaccine => `<li>${vaccine}</li>`).join('')}
+                        </ul>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<h3>Congratulations! You have taken all the recommended vaccines.</h3>`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<h3>Sorry, an error occurred while checking your vaccines. Please try again later.</h3>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Vaccine Tracker</h1>
+    <p>Select the vaccines you have taken:</p>
+
+    <form onsubmit="event.preventDefault(); checkVaccines();">
+        <div>
+            <label>
+                <input type="checkbox" name="vaccine" value="Chickenpox (varicella)">
+                <img src="{{ url_for('static', filename='images/vcc.png') }}" alt="Chickenpox Icon" style="width:20px; height:20px;">
+                Chickenpox (varicella)
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="checkbox" name="vaccine" value="COVID-19">
+                <img src="{{ url_for('static', filename='images/covid.png') }}" alt="COVID-19 Icon" style="width:20px; height:20px;">
+                COVID-19
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="checkbox" name="vaccine" value="Influenza (Flu)">
+                <img src="{{ url_for('static', filename='images/flu.png') }}" alt="Flu Vaccine Icon" style="width:20px; height:20px;">
+                Influenza (Flu)
+            </label>
+        </div>
+        <button type="submit">Check Vaccines</button>
+    </form>
+
+    <div id="result"></div>
+</body>
+</html>

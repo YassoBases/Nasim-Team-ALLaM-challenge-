@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Screen</title>
+
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        /* Styling for the body */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #888888FF; /* Background set to the requested color */
+            overflow: hidden;
+        }
+
+        /* Container to hold the images */
+        .welcome-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Styling the character image */
+        .character {
+            width: 30%;
+            max-width: 400px;
+            margin-right: 20px;
+        }
+
+        /* Styling the speech bubble */
+        .speech-bubble {
+            width: 40%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Welcome container holding the character and speech bubble images -->
+    <div class="welcome-container">
+        <img src="{{ url_for('static', filename='images/naseemchr.png') }}"
+             alt="Naseem Character" class="character">
+        <img src="{{ url_for('static', filename='images/wlcomechat.png') }}"
+             alt="Welcome Chat" class="speech-bubble">
+    </div>
+
+    <script>
+        // Redirect to the login page after 3 seconds
+        setTimeout(function() {
+            window.location.href = '/login';
+        }, 3000);
+    </script>
+
+</body>
+</html>
