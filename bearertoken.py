@@ -2,7 +2,7 @@ import requests
 
 
 def get_api_key():
-    api_key = "wTwjLTVdWNmtJMiuiZriH1fSSYCK5XnlNXR1mVjFvMIe"  # Replace with your actual API key
+    api_key = "YOUR_API_KEY"  # Replace with your actual API key
     token_url = "https://iam.cloud.ibm.com/identity/token"
     data = {
         "grant_type": "urn:ibm:params:oauth:grant-type:apikey",
